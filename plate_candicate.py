@@ -271,7 +271,7 @@ for candidate in candidates:
     (thresh, TOZERO_license_plate) = cv2.threshold(multi_license_plate, 130, 255, cv2.THRESH_TOZERO)
     cv2.imshow('TOZERO_license_plate' + str(candidateNum), TOZERO_license_plate)
 
-    (thresh, BINARY_INV_license_plate) = cv2.threshold(TOZERO_license_plate, 162, 255, cv2.THRESH_BINARY_INV)
+    (thresh, BINARY_INV_license_plate) = cv2.threshold(TOZERO_license_plate, 160, 255, cv2.THRESH_BINARY_INV)
     cv2.imshow('BINARY_INV_license_plate' + str(candidateNum), BINARY_INV_license_plate)
 
     # se1 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
