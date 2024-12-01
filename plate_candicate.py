@@ -265,14 +265,14 @@ for candidate in candidates:
 
     bilateralImg = cv2.bilateralFilter(grayRotatedRect, 11, 17, 17)
 
-    multi_license_plate = cv2.multiply(bilateralImg, 1.5)
-    cv2.imshow('multi_license_plate' + str(candidateNum), multi_license_plate)
+    multi_license_plate = cv2.multiply(bilateralImg, 1.64)
+    # cv2.imshow('multi_license_plate' + str(candidateNum), multi_license_plate)
 
-    (thresh, TOZERO_license_plate) = cv2.threshold(multi_license_plate, 130, 255, cv2.THRESH_TOZERO)
+    (thresh, TOZERO_license_plate) = cv2.threshold(multi_license_plate, 180, 255, cv2.THRESH_TOZERO)
     cv2.imshow('TOZERO_license_plate' + str(candidateNum), TOZERO_license_plate)
 
-    (thresh, BINARY_INV_license_plate) = cv2.threshold(TOZERO_license_plate, 160, 255, cv2.THRESH_BINARY_INV)
-    cv2.imshow('BINARY_INV_license_plate' + str(candidateNum), BINARY_INV_license_plate)
+    # (thresh, BINARY_INV_license_plate) = cv2.threshold(TOZERO_license_plate, 160, 255, cv2.THRESH_BINARY)
+    # cv2.imshow('BINARY_INV_license_plate' + str(candidateNum), BINARY_INV_license_plate)
 
     # se1 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
     # license_plate = cv2.morphologyEx(license_plate, cv2.MORPH_OPEN, se1, iterations=1)
@@ -283,10 +283,11 @@ for candidate in candidates:
     candidateNum += 1
     # cv2.imshow('bilateralImg' + str(candidateNum), bilateralImg)
 
-    img_pil = Image.fromarray(BINARY_INV_license_plate)
+    img_pil = Image.fromarray(TOZERO_license_plate)
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
     result = pytesseract.image_to_string(img_pil, lang='kor')
     result = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", "", result)
+    result = result.replace(" ", "")
     if result:
         print(result)
 
